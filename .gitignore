@@ -1,0 +1,6 @@
+/build
+/include
+/src
+/.vscode
+
+*.xml
