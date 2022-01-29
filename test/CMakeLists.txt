@@ -1,0 +1,5 @@
+add_executable(vector_add "vector_add.cpp")
+target_link_libraries(vector_add PRIVATE cl3w)
+if(UNIX)
+    target_link_libraries(vector_add PRIVATE dl)
+endif()
