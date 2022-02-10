@@ -14,16 +14,20 @@ import fnmatch
 from xml.dom.minidom import parseString
 from urllib import request
 
-WTFPL = """/*
+SRC = """
  * This file was generated with cl3w_gen.py, part of cl3w
  * (hosted at https://github.com/cloudhan/cl3w)
- *
+"""
+
+WTFPL = """
  * This program is free software. It comes without any warranty, to the extent
  * permitted by applicable law. You can redistribute it and/or modify it under
  * the terms of the Do What The Fuck You Want To Public License, Version 2, as
  * published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
- */
 """
+
+HEADER = "/*" + SRC + " *" + WTFPL + "*/\n"
+NO_LICENSE_HEADER = "/*" + SRC + "*/\n"
 
 cl_stds = ["1.0", "1.1", "1.2", "2.0", "2.1", "2.2", "3.0"]
 
@@ -34,18 +38,20 @@ parser.add_argument("--cl_xml", type=str,
 parser.add_argument("--indent", default=4, choices=["\t", 2, 4, 8])
 parser.add_argument("--cl_std", type=str, default="1.2", choices=cl_stds)
 parser.add_argument("--cl_ext", type=str, default=None, help="a file of a list of ext names, wildcard supported, # for comment")
-parser.add_argument("--no_license_header", action="store_true")
+parser.add_argument("--no_header", action="store_true")
+parser.add_argument("--no_license", action="store_true")
 args = parser.parse_args()
 
 indent_unit = args.indent if isinstance(args.indent, str) else int(args.indent) * " "
 
-def download(url):
-    print('Downloading {0}'.format(url))
-    return request.urlopen(url).read()
-
 
 def indent(level):
     return indent_unit * level
+
+
+def download(url):
+    print('Downloading {0}'.format(url))
+    return request.urlopen(url).read()
 
 
 def get_supported_func_names(dom, cl_std: str, cl_exts: List[str]):
@@ -295,8 +301,11 @@ class Template:
 
     def write(self, path):
         with open(path, "w") as f:
-            if not args.no_license_header:
-                f.write(WTFPL)
+            if not args.no_header:
+                if args.no_license:
+                    f.write(NO_LICENSE_HEADER)
+                else:
+                    f.write(HEADER)
             f.write(self.tpl)
 
 
