@@ -1,5 +1,5 @@
-#ifndef __gl3w_h_
-#define __gl3w_h_
+#ifndef __cl3w_h_
+#define __cl3w_h_
 
 #include <CL/opencl.h>
 
