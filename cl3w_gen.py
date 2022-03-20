@@ -34,7 +34,7 @@ cl_stds = ["1.0", "1.1", "1.2", "2.0", "2.1", "2.2", "3.0"]
 parser = argparse.ArgumentParser(description='cl3w generator script')
 parser.add_argument("--root", type=str, default=os.path.dirname(__file__), help="output root directory")
 parser.add_argument("--cl_xml", type=str,
-                    default="https://github.com/KhronosGroup/OpenCL-Docs/raw/master/xml/cl.xml")
+                    default="https://github.com/KhronosGroup/OpenCL-Docs/raw/main/xml/cl.xml")
 parser.add_argument("--indent", default=4, choices=["\t", 2, 4, 8])
 parser.add_argument("--cl_std", type=str, default="1.2", choices=cl_stds)
 parser.add_argument("--cl_ext", type=str, default=None, help="a file of a list of ext names, wildcard supported, # for comment")
